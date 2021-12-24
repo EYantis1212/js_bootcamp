@@ -15,9 +15,21 @@
 	</head>
 	<body>
 		<h1>Todos</h1>
-		<input id="new-todo" type="text" placeholder="Enter To Do" />
-		<button id="add-todo">Add ToDo</button>
+		<input
+			id="filter-text"
+			type="text"
+			placeholder="Type to filter"
+		/><br />
+
 		<div id="todo"></div>
+		<form id="create-todo">
+			<input
+				name="createTodo"
+				type="text"
+				placeholder="Enter something To Do"
+			/>
+			<button>Create ToDo</button>
+		</form>
 		<script src="./todo.js"></script>
 	</body>
 </html>
