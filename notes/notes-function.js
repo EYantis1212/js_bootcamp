@@ -23,8 +23,8 @@ const removeNote = function (id) {
 // Generate Note Dom
 const generateNoteDOM = function (note) {
 	const noteEl = document.createElement('div');
-	const textEl = document.createElement('span');
 	const noteButton = document.createElement('button');
+	const noteTextLink = document.createElement('a');
 
 	// Remove Note Button
 	noteButton.textContent = 'x';
@@ -33,15 +33,17 @@ const generateNoteDOM = function (note) {
 		saveNotes(notes);
 		renderNotes(notes, filters);
 	});
-
+	// Note Link Setup
+	noteTextLink.setAttribute('href', `/edit.html#${note.id}`);
+	noteTextLink.innerHTML = note.title;
 	// Setup Note Title Text
 	if (note.title.length > 0) {
-		textEl.textContent = note.title;
+		noteTextLink.innerHTML = note.title;
 	} else {
-		textEl.textContent = 'Untitled Note';
+		noteTextLink.innerHTML = 'Untitled Note';
 	}
 	noteEl.appendChild(noteButton);
-	noteEl.appendChild(textEl);
+	noteEl.appendChild(noteTextLink);
 
 	return noteEl;
 };
