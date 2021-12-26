@@ -1,50 +1,30 @@
 // MAIN NOTES ARRAY
-const notes = [
-	{
-		title: 'Career Goal',
-		body: 'I want to become a developer',
-	},
-	{
-		title: 'Habits I want to have',
-		body: 'Learn something, brush teeth, and eat right, everyday',
-	},
-	{
-		title: 'Sealing windows',
-		body: 'Look up prices to order siding to seal windows',
-	},
-	{
-		title: 'Call Dixie',
-		body: 'Call Dixie and let her know the news about VA program',
-	},
-];
+const notes = getSavedNotes();
+
 const filters = {
 	searchText: '',
 };
 
 // SELECTORS AND LISTENERS
+
+// Create Note
 document.querySelector('#create-note').addEventListener('click', function (e) {
-	e.target.textContent = 'WEEEE!';
+	notes.push({
+		id: uuidv4(),
+		title: '',
+		body: '',
+	});
+	saveNotes(notes);
+	renderNotes(notes, filters);
 });
+
+// Filter Notes
 document.querySelector('#filter-input').addEventListener('input', function (e) {
 	filters.searchText = e.target.value;
 	renderNotes(notes, filters);
 });
-document.querySelector('#name-form').addEventListener('submit', function (e) {
-	e.preventDefault();
-	console.log(e.target.elements.firstName.value);
-	e.target.elements.firstName.value = '';
+document.querySelector('#filter-by').addEventListener('change', function (e) {
+	console.log(e.target.value);
 });
-const renderNotes = function (notes, filters) {
-	const filteredNotes = notes.filter(function (note) {
-		return note.title
-			.toLowerCase()
-			.includes(filters.searchText.toLowerCase());
-	});
-	document.querySelector('#notes').innerHTML = '';
-	filteredNotes.forEach(function (note) {
-		const noteElement = document.createElement('p');
-		noteElement.textContent = note.title;
-		document.querySelector('#notes').appendChild(noteElement);
-	});
-};
+
 renderNotes(notes, filters);

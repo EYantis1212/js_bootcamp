@@ -19,7 +19,9 @@
 			id="filter-text"
 			type="text"
 			placeholder="Type to filter"
-		/><br />
+		/><label>
+			<input type="checkbox" id="hide-completed" />Hide Completed </label
+		><br />
 
 		<div id="todo"></div>
 		<form id="create-todo">
@@ -30,6 +32,8 @@
 			/>
 			<button>Create ToDo</button>
 		</form>
+		<script src="./uuidv4.js"></script>
+		<script src="./todo-functions.js"></script>
 		<script src="./todo.js"></script>
 	</body>
 </html>

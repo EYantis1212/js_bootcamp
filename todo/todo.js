@@ -1,52 +1,45 @@
 // DATA
-const todos = [
-	{ text: 'Get oil changed on Fiat', completed: false },
-	{ text: 'Get engine light diagnosed', completed: true },
-	{ text: 'Remove weeds from backyard', completed: false },
-	{ text: 'Seal Windows', completed: true },
-	{ text: 'Clean hamster cage', completed: false },
-];
+let todos = getSavedTodos();
 const filters = {
 	searchText: '',
+	hideCompleted: false,
 };
+
 // SELECTORS & LISTENERS
 // Filter Input
 document.querySelector('#filter-text').addEventListener('input', function (e) {
 	filters.searchText = e.target.value;
 	renderTodos(todos, filters);
 });
+// Hide Completed Checkbox
+document
+	.querySelector('#hide-completed')
+	.addEventListener('change', function (e) {
+		filters.hideCompleted = e.target.checked;
+		renderTodos(todos, filters);
+	});
 // Create ToDo Form
 document.querySelector('#create-todo').addEventListener('submit', function (e) {
 	e.preventDefault();
-	const newTodo = { text: e.target.createTodo.value, completed: false };
-	e.target.createTodo.value = '';
-	todos.push(newTodo);
+	todos.push({
+		id: uuidv4(),
+		text: e.target.createTodo.value,
+		completed: false,
+	});
+	saveTodos(todos);
 	renderTodos(todos, filters);
+	e.target.createTodo.value = '';
 });
+
 // FILTER FUNCTION
 
-const renderTodos = function (todos, filters) {
-	// Filters Data by Filters Search Text
-	const filteredTodos = todos.filter(function (todo) {
-		return todo.text
-			.toLowerCase()
-			.includes(filters.searchText.toLowerCase());
-	});
-	// Filters completed for summary
-	const incompleteTodos = filteredTodos.filter(function (todo, index) {
-		return !todo.completed;
-	});
-	//Clears DIV of Data on filter
-	document.querySelector('#todo').innerHTML = '';
-	//Creates h2 with Summary Text
-	const summary = document.createElement('h2');
-	summary.textContent = `You have ${incompleteTodos.length} things left to do`;
-	document.querySelector('#todo').appendChild(summary);
-	//Adds filtered Data to HTML Div
-	filteredTodos.forEach(function (todo) {
-		const todoElement = document.createElement('p');
-		todoElement.textContent = todo.text;
-		document.querySelector('#todo').appendChild(todoElement);
-	});
-};
+// DATA STORAGE
+
 renderTodos(todos, filters);
+
+// EXTRA
+// { text: 'Get oil changed on Fiat', completed: false },
+// 	{ text: 'Get engine light diagnosed', completed: true },
+// 	{ text: 'Remove weeds from backyard', completed: false },
+// 	{ text: 'Seal Windows', completed: true },
+// 	{ text: 'Clean hamster cage', completed: false },
